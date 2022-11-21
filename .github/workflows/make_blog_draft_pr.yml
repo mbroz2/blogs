@@ -30,6 +30,10 @@ on:
         - 'release channel'
         - 'test channel'
         - 'off'
+      branch-name:
+        description: 'Branch name, defaults to {version}-post'
+        required: false
+        type: string
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,12 +58,17 @@ jobs:
           echo "::set-output name=staging-url::https://blogs-staging-openlibertyio.mqj6zf7jocq.us-south.codeengine.appdomain.cloud/blog/$(echo ${{ inputs.publish-date }} | tr - /)/${{ inputs.version }}.html"
           echo "::set-output name=pr-branch::Draft"
 
+      - name: Set branch name
+        id: set-branch
+        run: |
+          echo "::set-output name=branch-name::$( [[ -z "$inputs.branch-name" ]] && echo ${{ inputs.version }} || echo ${{ inputs.branch-name }} )"
+
       - name: Create PR
         id: create-pr
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: ${{ inputs.version }}
-          branch: ${{ inputs.version }}-post
+          branch: ${{ steps.set-branch.branch-name }}-post
           base: prod
           title: ${{ inputs.version }} draft
           assignees: ${{ github.actor }}
