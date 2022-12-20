@@ -1,0 +1,377 @@
+---
+layout: post
+title: "TITLE"
+# Do NOT change the categories section
+categories: blog
+author_picture: https://avatars3.githubusercontent.com/mbroz2
+author_github: https://github.com/mbroz2
+seo-title: TITLE - makes sure it ends with - OpenLiberty.io
+seo-description: DESCRIPTION
+blog_description: DESCRIPTION
+open-graph-image: https://openliberty.io/img/twitter_card.jpg
+open-graph-image-alt: Open Liberty Logo
+---
+= TITLE
+Michal Broz <https://github.com/mbroz2>
+:imagesdir: /
+:url-prefix:
+:url-about: /
+//Blank line here is necessary before starting the body of the post.
+
+// // // // // // // //
+// In the preceding section:
+// Do not insert any blank lines between any of the lines.
+// Do not remove or edit the variables on the lines beneath the author name.
+//
+// "open-graph-image" is set to OL logo. Whenever possible update this to a more appropriate/specific image (For example if present an image that is being used in the post). However, it
+// can be left empty which will set it to the default
+//
+// "open-graph-image-alt" is a description of what is in the image (not a caption). When changing "open-graph-image" to
+// a custom picture, you must provide a custom string for "open-graph-image-alt".
+//
+// Replace TITLE with the blog post title eg: MicroProfile 3.3 is now available on Open Liberty 20.0.0.4
+// Replace mbroz2 with your GitHub username eg: lauracowen
+// Replace DESCRIPTION with a short summary (~60 words) of the release (a more succinct version of the first paragraph of the post).
+// Replace Michal Broz with your name as you'd like it to be displayed, 
+// eg: LauraCowen
+//
+// For every link starting with "https://openliberty.io" in the post make sure to use
+// {url-prefix}. e.g- link:{url-prefix}/guides/GUIDENAME[GUIDENAME]:
+//
+// If adding image into the post add :
+// -------------------------
+// [.img_border_light]
+// image::img/blog/FILE_NAME[IMAGE CAPTION ,width=70%,align="center"]
+// -------------------------
+// "[.img_border_light]" = This adds a faint grey border around the image to make its edges sharper. Use it around screenshots but not           
+// around diagrams. Then double check how it looks.
+// There is also a "[.img_border_dark]" class which tends to work best with screenshots that are taken on dark backgrounds.
+// Change "FILE_NAME" to the name of the image file. Also make sure to put the image into the right folder which is: img/blog
+// change the "IMAGE CAPTION" to a couple words of what the image is
+// // // // // // // //
+
+BETA_RELEASE_SUMMARY
+
+// // // // // // // //
+// Change the RELEASE_SUMMARY to an introductory paragraph. This sentence is really
+// important because it is supposed to grab the readers attention.  Make sure to keep the blank lines 
+//
+// Throughout the doc, replace 22.0.0.11-beta with the version number of Open Liberty, eg: 22.0.0.2-beta
+// // // // // // // //
+
+The link:{url-about}[Open Liberty] 22.0.0.11-beta includes the following beta features (along with link:{url-prefix}/docs/latest/reference/feature/feature-overview.html[all GA features]):
+
+* <<SUB_TAG_0, Jakarta Mail 2.1>>
+* <<SUB_TAG_1, Jakarta EE 10: Support Jakarta Servlet 6.0>>
+* <<SUB_TAG_2, Connectors-2.1>>
+* <<SUB_TAG_3, Persistence 3.1>>
+* <<SUB_TAG_4, Open Liberty Instant On With Checkpoint and Restore>>
+
+// // // // // // // //
+// In the preceding section:
+// Change SUB_FEATURE_TITLE to the feature that is included in this release and
+// change the SUB_TAG_1/2/3 to the heading tags
+//
+// However if there's only 1 new feature, delete the previous section and change it to the following sentence:
+// "The link:{url-about}[Open Liberty] 22.0.0.11-beta includes SUB_FEATURE_TITLE"
+// // // // // // // //
+
+See also link:{url-prefix}/blog/?search=beta&key=tag[previous Open Liberty beta blog posts].
+
+// // // // DO NOT MODIFY THIS COMMENT BLOCK <GHA-BLOG-TOPIC> // // // // 
+// Blog issue: https://github.com/OpenLiberty/open-liberty/issues/22423
+// Contact/Reviewer: neuwerk,ReeceNana
+// // // // // // // // 
+[#SUB_TAG_0]
+== Jakarta Mail 2.1
+
+
+1. Which Liberty feature(s) does your update relate to?
+    
+   Human-readable name (eg WebSockets feature): Jakarta Mail 2.1
+   
+   Short feature name (eg websockets-1.0): mail-2.1
+
+2. Who is the target persona? Who do you expect to use the update? eg application developer, operations.
+
+   Application developer, operations
+
+4. Provide a summary of the update, including the following points:
+   
+   - A sentence or two that introduces the update to someone new to the general technology/concept.
+
+   Jakarta Mail 2.1 support allows your Jakarta EE 10 applications to send, read, and edit E-Mail from mail servers via the Jakarta Mail APIs. 
+
+   - What was the problem before and how does your update make their life better? (Why should they care?)
+   
+ The biggest change to Jakarta Mail 2.1 specification is the removal of the direct dependency of the specification APIs on the reference implementation. This means that in certain cases there will no longer be a need to compile your Jakarta Mail code against both the specification and the reference implementation (provided you aren't making any direct calls to the RI in your code). In order to facilitate this, Jakarta Mail 2.1 also introduced a utility interface link:https://jakarta.ee/specifications/mail/2.1/apidocs/jakarta.mail/jakarta/mail/util/streamprovider[jakarta.mail.util.StreamProvider], that can be easily obtaining via the `jakarta.mail.Session.getStreamProvider()` method. You can then use the StreamProviders to obtain Encoded/Decoded Streams for any of the encoding/decoding methods mail-2.1 supports. 
+
+   - Briefly explain how to make your update work. Include screenshots, diagrams, and/or code snippets, and provide a `server.xml` snippet.
+   
+The mail-2.1 feature can be enabled via the server.xml: 
+
+```
+  <featureManager>
+    <feature>mail-2.1</feature>
+  </featureManager>
+```
+   - Where can they find out more about this specific update (eg Open Liberty docs, Javadoc) and/or the wider technology?
+
+More information about the Jakarta Mail 2.1 specification can be found at the link:https://eclipse-ee4j.github.io/mail/[Jakarta Mail] project website.
+
+
+// DO NOT MODIFY THIS LINE. </GHA-BLOG-TOPIC> 
+
+// // // // DO NOT MODIFY THIS COMMENT BLOCK <GHA-BLOG-TOPIC> // // // // 
+// Blog issue: https://github.com/OpenLiberty/open-liberty/issues/22415
+// Contact/Reviewer: pnicolucci,pmd1nh,ReeceNana
+// // // // // // // // 
+// WARNING: THIS ISSUE IS CLOSED! VERIFY IF IT SHOULD BE INCLUDED IN BLOG!
+[#SUB_TAG_1]
+== Jakarta EE 10: Support Jakarta Servlet 6.0
+
+
+1. Which Liberty feature(s) does your update relate to?
+    
+   Human-readable name (eg WebSockets feature): 
+>Jakarta Servlet 6.0
+   
+   Short feature name (eg websockets-1.0): 
+>servlet-6.0
+
+2. Who is the target persona? Who do you expect to use the update? eg application developer, operations: 
+>Developers of Jakarta Enterprise Edition (EE) application.
+
+3. Provide a summary of the update, including the following points:
+   
+   - A sentence or two that introduces the update to someone new to the general technology/concept.
+
+>The Open Liberty servlet-6.0 feature is an implementation of the Jakarta  EE 10 Servlet 6.0 Specification.  It includes a number of new features, specification clarifications as well as deprecation features.
+>
+   - What was the problem before and how does your update make their life better? (Why should they care?)
+>Prior to servlet-6.0, there were only a few specific methods that could be set for an application's cookie attributes. There was not an easy way for application to set a new attribute (for example, the recent browser security's SameSite attribute). One of the new features in servlet-6.0 is the ability to set any attribute using a Cookie's setAttribute method. In addition, servlet-6.0 also introduces some new request APIs to aid the application's debugging. Application developer can track or refer to a request using the ServletRequest's getRequestId or obtain details of the network connection that is being used by the request by calling ServletRequest's getServletConnection.
+
+```
+Examples:
+ 
+Get an ID for this request:
+    String id = ServletRequest.getRequestId();
+Get a protocol that is used for this request:
+    String protoId = ServletRequest.getProtocolRequestId();
+Get ServletConnection object which has additional information for about the connection to this request:
+    ServletConnection = ServletRequest.getServletConnection();
+```
+>
+   - Briefly explain how to make your update work. Include screenshots, diagrams, and/or code snippets, and provide a `server.xml` snippet.
+ 
+```
+   <featureManager>
+       <feature>servlet-6.0</feature>
+   </featureManager>
+```
+
+   - Where can they find out more about this specific update (eg Open Liberty docs, Javadoc) and/or the wider technology?
+>The Jakarta Servlet 6.0 Specification and Javadocs can be found at https://jakarta.ee/specifications/servlet/6.0/
+
+// DO NOT MODIFY THIS LINE. </GHA-BLOG-TOPIC> 
+
+// // // // DO NOT MODIFY THIS COMMENT BLOCK <GHA-BLOG-TOPIC> // // // // 
+// Blog issue: https://github.com/OpenLiberty/open-liberty/issues/22115
+// Contact/Reviewer: tabishop,ReeceNana
+// // // // // // // // 
+// WARNING: THIS ISSUE IS CLOSED! VERIFY IF IT SHOULD BE INCLUDED IN BLOG!
+[#SUB_TAG_2]
+== Connectors-2.1
+1. Which Liberty feature(s) does your update relate to?
+    
+   Human-readable name (eg WebSockets feature): `Jakarta Connectors 2.1`
+   
+   Short feature name (eg websockets-1.0): `connectors-2.1`
+
+2. Who is the target persona? Who do you expect to use the update? eg application developer, operations.
+```
+Application Developer
+```
+
+3. Provide a summary of the update, including the following points:
+   
+   - A sentence or two that introduces the update to someone new to the general technology/concept.
+  ```
+This feature allows Open Liberty users that want to use the latest release of the Jakarta Resource specification https://github.com/eclipse-ee4j/jca-api within their application.
+
+The main update to connectors to come out of this feature is the addition of Java generics support to the jakarta.resource.cci.ResourceFactory, jakarta.resource.cci.IndexedRecord, and jakarta.resource.cci.MappedRecord classes 
+```
+
+   - What was the problem before and how does your update make their life better? (Why should they care?)
+   ``` 
+Open Liberty is keeping our connectors implementation up to date with the latest specification.
+```
+   
+   - Briefly explain how to make your update work. Include screenshots, diagrams, and/or code snippets, and provide a `server.xml` snippet.
+   ```xml
+<!-- Users can activate this feature using -->
+<server>
+    <featureManager>
+      <feature>connectors-2.1</feature>
+    </featureManager>
+</server>
+```
+   
+```
+All other `resourceAdapter` configurations within server.xml can remain unchanged for current applications.
+```
+
+   - Where can they find out more about this specific update (eg Open Liberty docs, Javadoc) and/or the wider technology?
+```
+Spec Project: https://github.com/eclipse-ee4j/jca-api
+Spec API: https://mvnrepository.com/artifact/jakarta.resource/jakarta.resource-api
+Spec Javadoc: https://jakarta.ee/specifications/connectors/2.1/apidocs/jakarta.resource/module-summary.html 
+```
+
+// DO NOT MODIFY THIS LINE. </GHA-BLOG-TOPIC> 
+
+// // // // DO NOT MODIFY THIS COMMENT BLOCK <GHA-BLOG-TOPIC> // // // // 
+// Blog issue: https://github.com/OpenLiberty/open-liberty/issues/22078
+// Contact/Reviewer: ReeceNana,jgrassel
+// // // // // // // // 
+[#SUB_TAG_3]
+== Persistence 3.1
+
+
+1. Which Liberty feature(s) does your update relate to? 
+    
+   Human-readable name (eg WebSockets feature): Jakarta Persistence API 3.1
+   
+   Short feature name (eg websockets-1.0):  persistence-3.1, persistenceContainer-3.1
+
+2. Who is the target persona? Who do you expect to use the update? eg application developer, operations.
+The target audience are Jakarta EE developers who want to use JPA to mediate Database interactions.
+
+
+3. Provide a summary of the update, including the following points:
+   
+   - A sentence or two that introduces the update to someone new to the general technology/concept.
+   Jakarta Persistence API is a richly featured API which provides object-model approach to persisting, fetching, and modifying data stored on a Relational Database System
+
+   - What was the problem before and how does your update make their life better? (Why should they care?)
+   JPA has been around since EE 5, but before JPA you had to use EJB's Bean or Container managed entities, or raw JDBC to interact with database storage.
+   
+   - Briefly explain how to make your update work. Include screenshots, diagrams, and/or code snippets, and provide a `server.xml` snippet.
+   
+   - Where can they find out more about this specific update (eg Open Liberty docs, Javadoc) and/or the wider technology?
+
+
+// DO NOT MODIFY THIS LINE. </GHA-BLOG-TOPIC> 
+
+// // // // DO NOT MODIFY THIS COMMENT BLOCK <GHA-BLOG-TOPIC> // // // // 
+// Blog issue: https://github.com/OpenLiberty/open-liberty/issues/21977
+// Contact/Reviewer: tjwatson
+// // // // // // // // 
+// WARNING: THIS ISSUE IS CLOSED! VERIFY IF IT SHOULD BE INCLUDED IN BLOG!
+[#SUB_TAG_4]
+== Open Liberty Instant On With Checkpoint and Restore
+
+
+1. Which Liberty feature(s) does your update relate to?
+    
+   Human-readable name: Instant On Checkpoint feature
+   
+   Short feature name:  checkpoint-1.0 
+
+2. Who is the target persona? Who do you expect to use the update? Application Developer, Operations
+
+    application developers, operations
+
+3. Write a paragraph to summarise the update, including the following points:
+    
+   - A sentence or two that introduces the update to someone new to the general technology/concept.
+
+     Open Liberty InstantOn allows applications running on Open Liberty to checkpoint the startup process and restore the application process very quickly, providing InstantOn behavior for the application.
+   - What was the problem before and how does your update make their life better? (Why should they care?)
+
+     Starting an application can take several seconds and sometimes minutes before being able to service the applications first request.  Longer startup times inhibit an applications ability to scale to zero when deployed in a cloud environment such as Kubernetes.  Restoring an application from a checkpoint process can take much less time, up to 10 times faster than starting the Liberty application from the beginning.
+   
+   - Briefly explain how to make your update work. Include screenshots, diagrams, and/or code snippets, and provide a `server.xml` snippet.
+
+     For details on how to use Open Liberty InstantOn have a look at the InstantOn beta blog at: https://ibm.biz/InstantOn
+
+   - Where can they find out more about this specific update (eg Open Liberty docs, Javadoc) and/or the wider technology?
+
+
+// DO NOT MODIFY THIS LINE. </GHA-BLOG-TOPIC> 
+
+
+
+To enable the new beta features in your app, add them to your `server.xml`:
+
+[source, xml]
+----
+
+----
+
+[#run]
+=== Try it now 
+
+To try out these features, update your build tools to pull the Open Liberty All Beta Features package instead of the main release. The beta works with Java SE XX, Java SE 17, Java SE 11, and Java SE 8.
+// // // // // // // //
+// In the preceding section:
+// Check if a new non-LTS Java SE version is supported that needs to be added to the list (17, 11, and 8 are LTS and will remain for a while)
+// https://openliberty.io/docs/latest/java-se.html
+// // // // // // // //
+
+If you're using link:{url-prefix}/guides/maven-intro.html[Maven], you can install the All Beta Features package using:
+
+[source,xml]
+----
+<plugin>
+    <groupId>io.openliberty.tools</groupId>
+    <artifactId>liberty-maven-plugin</artifactId>
+    <version>RELEASE</version>
+    <configuration>
+        <runtimeArtifact>
+          <groupId>io.openliberty.beta</groupId>
+          <artifactId>openliberty-runtime</artifactId>
+          <version>22.0.0.11-beta</version>
+          <type>zip</type>
+        </runtimeArtifact>
+    </configuration>
+</plugin>
+----
+
+You must also add dependencies to your pom.xml file for the beta version of the APIs that are associated with the beta features that you want to try.  For example, for Jakarta EE 10 and MicroProfile 6, you would include:
+[source,xml]
+----
+<dependency>
+    <groupId>org.eclipse.microprofile</groupId>
+    <artifactId>microprofile</artifactId>
+    <version>6.0-RC3</version>
+    <type>pom</type>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>jakarta.platform</groupId>
+    <artifactId>jakarta.jakartaee-api</artifactId>
+    <version>10.0.0</version>
+    <scope>provided</scope>
+</dependency>
+----
+
+Or for link:{url-prefix}/guides/gradle-intro.html[Gradle]:
+
+[source,gradle]
+----
+dependencies {
+    libertyRuntime group: 'io.openliberty.beta', name: 'openliberty-runtime', version: '[22.0.0.11-beta,)'
+}
+----
+
+Or take a look at our link:{url-prefix}/downloads/#runtime_betas[Downloads page].
+
+For more information on using a beta release, refer to the link:{url-prefix}docs/latest/installing-open-liberty-betas.html[Installing Open Liberty beta releases] documentation.
+
+[#feedback]
+== We welcome your feedback
+
+Let us know what you think on link:https://groups.io/g/openliberty[our mailing list]. If you hit a problem, link:https://stackoverflow.com/questions/tagged/open-liberty[post a question on StackOverflow]. If you hit a bug, link:https://github.com/OpenLiberty/open-liberty/issues[please raise an issue].
+
+
