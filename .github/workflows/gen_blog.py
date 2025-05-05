@@ -64,16 +64,20 @@ def find_previous_posts(issue_url):
     dir = 'posts'
     
     thingToFind = BLOG_ISSUE_SECTION_START.partition("// Contact/Reviewer: ")[0].replace(BLOG_ISSUE_URL_PLACEHOLDER, issue_url)
+    print("thingToFind: " + thingToFind)
 
     for filename in os.listdir(dir):
         file = os.path.join(dir, filename)
         if filename.endswith('-beta.adoc') and os.path.isfile(file):
             with open(file, 'r') as file:
+                print("Scanning file: " + filename)
                 post = file.read()
                 start = post.find(thingToFind)
                 if start != -1:
+                    print("Found: " + start)
                     start += len(thingToFind)
                     end = post.find(BLOG_ISSUE_SECTION_END, start)
+                    print("End: " + end)
                     excerpt = ""
                     if end != -1:
                         excerpt = post[start:end]
@@ -111,7 +115,9 @@ def make_blog(issues, is_beta):
             if beta_issue_link == "" and linked_issue != None:
                 beta_issue_link = linked_issue["html_url"]
 
-            if beta_issue_link != "":
+            if beta_issue_link == "https://github.com/OpenLiberty/open-liberty/issues/0":
+                print('The blog beta link contained the placeholder issue 0 when processing the GA issue: ' + issue["html_url"] + '. Skipping searching for content in previous beta posts.')
+            elif beta_issue_link != "":
                 previous_posts = find_previous_posts(beta_issue_link)
             else:
                 print('Could not find any corresponding beta issue to scan previous posts for when processing the GA issue: ' + issue["html_url"])
